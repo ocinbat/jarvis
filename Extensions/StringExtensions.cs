@@ -5,10 +5,7 @@ using System.Text.RegularExpressions;
 
 public static class StringExtensions
 {
-    /// <summary>
-    /// A dictionary to hold the characters in an HTMl string which needs to be replaced.
-    /// </summary>
-    private static Dictionary<string, string> htmlReplacementCharacters;
+    private static Dictionary<string, string> _htmlReplacementCharacters;
 
     public static T ToEnum<T>(this string value)
     {
@@ -229,10 +226,10 @@ public static class StringExtensions
         }
 
         // Check if we generated html spesific characters before.
-        if (htmlReplacementCharacters == null)
+        if (_htmlReplacementCharacters == null)
         {
             // Generate if it's empty.
-            htmlReplacementCharacters = GenerateHtmlReplacementCharacters();
+            _htmlReplacementCharacters = GenerateHtmlReplacementCharacters();
         }
 
         // Change to lowercase and trim.
@@ -242,7 +239,7 @@ public static class StringExtensions
         title = Regex.Replace(title, "<.*?>", string.Empty);
 
         // Loop throught replacement list.
-        foreach (KeyValuePair<string, string> pair in htmlReplacementCharacters)
+        foreach (KeyValuePair<string, string> pair in _htmlReplacementCharacters)
         {
             // Check if ignore list contains our character.
             if (!ignoredCharacters.Contains(pair.Key))
