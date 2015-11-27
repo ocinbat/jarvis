@@ -215,7 +215,7 @@ public static class StringExtensions
         // Check input title.
         if (String.IsNullOrEmpty(title))
         {
-            return "tanimsiz";
+            return String.Empty;
         }
 
         // Check if developer defined any ignored chars for this invocation.
