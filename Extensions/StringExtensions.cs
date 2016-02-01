@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -205,11 +206,6 @@ public static class StringExtensions
         return String.Join("", value.Substring(0, length - 3), "...");
     }
 
-    /// <summary>
-    /// Get seo title
-    /// </summary>
-    /// <param name="title"> The title. </param>
-    /// <returns> seo title </returns>
     public static string ToSlug(this string title, List<string> ignoredCharacters = null)
     {
         // Check input title.
@@ -253,12 +249,19 @@ public static class StringExtensions
         return title;
     }
 
+    public static string ToTitleCase(this string input)
+    {
+        return ToTitleCase(input, new CultureInfo("tr-TR"));
+    }
+
+    public static string ToTitleCase(this string input, CultureInfo cultureInfo)
+    {
+        TextInfo textInfo = cultureInfo.TextInfo;
+        return textInfo.ToTitleCase(input);
+    }
+
     #region Helpers
 
-    /// <summary>
-    /// This method generated default characters to be replaced in order to make input string SEO friendly.
-    /// </summary>
-    /// <returns>Returns a dictonary of strings with replaced values of keys.</returns>
     private static Dictionary<string, string> GenerateHtmlReplacementCharacters()
     {
         Dictionary<string, string> results = new Dictionary<string, string>();
