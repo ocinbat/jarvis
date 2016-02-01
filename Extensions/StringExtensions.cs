@@ -257,7 +257,7 @@ public static class StringExtensions
     public static string ToTitleCase(this string input, CultureInfo cultureInfo)
     {
         TextInfo textInfo = cultureInfo.TextInfo;
-        return textInfo.ToTitleCase(input);
+        return textInfo.ToTitleCase(input.ToLower());
     }
 
     #region Helpers
