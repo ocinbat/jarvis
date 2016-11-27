@@ -72,6 +72,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="IEnumerableExtensionTests.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

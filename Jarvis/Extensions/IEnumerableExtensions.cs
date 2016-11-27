@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 
 public static class IEnumerableExtensions
 {
@@ -66,5 +68,61 @@ public static class IEnumerableExtensions
             Array.Resize(ref array, count);
             yield return new ReadOnlyCollection<T>(array);
         }
+    }
+
+    public static IEnumerable<T> Select<T>(this IEnumerable<T> source, string fields)
+    {
+        // Check source.
+        if (source == null)
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
+
+        // Check if we have any parameters.
+        if (String.IsNullOrEmpty(fields))
+        {
+            throw new ArgumentNullException(nameof(fields));
+        }
+
+        // Create input parameter "o".
+        ParameterExpression parameterExpression = Expression.Parameter(typeof(T), "o");
+
+        // Create new statement "new Data()".
+        NewExpression newExpression = Expression.New(typeof(T));
+
+        // Get a list of assignable members.
+        IEnumerable<string> assignableMembers = fields
+            .Split(',')
+            .Where(o => typeof(T).GetProperty(o) != null)
+            .Select(o => o.Trim());
+
+        // Check if we have any assignable member.
+        if (assignableMembers.IsEmpty())
+        {
+            throw new ArgumentException($"None of the given names ({fields}) is assignable to a property on type: {typeof(T).FullName}", nameof(fields));
+        }
+
+        // Create initializers.
+        IEnumerable<MemberAssignment> memberAssignments = assignableMembers
+            .Select(o =>
+            {
+                // Property "Field1".
+                PropertyInfo propertyInfo = typeof(T).GetProperty(o);
+
+                // Original value "o.Field1".
+                MemberExpression memberExpression = Expression.Property(parameterExpression, propertyInfo);
+
+                // Set value "Field1 = o.Field1".
+                return Expression.Bind(propertyInfo, memberExpression);
+            });
+
+        // Initialization "new Data { Field1 = o.Field1, Field2 = o.Field2 }".
+        MemberInitExpression memberInitExpression = Expression.MemberInit(newExpression, memberAssignments);
+
+        // Expression "o => new Data { Field1 = o.Field1, Field2 = o.Field2 }".
+        Expression<Func<T, T>> lambda = Expression.Lambda<Func<T, T>>(memberInitExpression, parameterExpression);
+
+        // Compile to Func<Data, Data>.
+        return source.Select(lambda.Compile());
     }
 }
