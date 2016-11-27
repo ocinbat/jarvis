@@ -29,7 +29,7 @@ namespace Jarvis.Tests
         [Test]
         public void SelectTest()
         {
-            IEnumerable<User> users = _users.Where(u => u.Id == 1).Select("Test,mahmut");
+            IEnumerable<User> users = _users.Where(u => u.Id == 1).Select("Id");
 
             foreach (User user in users)
             {
