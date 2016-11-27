@@ -133,16 +133,19 @@ public static class IEnumerableExtensions
         {
             foreach (QueryParameter parameter in queryParameters)
             {
-                ParameterExpression param = Expression.Parameter(typeof(T), "p");
-                Expression<Func<T, bool>> exp = Expression.Lambda<Func<T, bool>>(
-                    Expression.Equal(
-                        Expression.Property(param, parameter.Name),
-                        Expression.Constant(parameter.Value)
-                    ),
-                    param
-                );
+                if (parameter.Value != null)
+                {
+                    ParameterExpression param = Expression.Parameter(typeof(T), "p");
+                    Expression<Func<T, bool>> exp = Expression.Lambda<Func<T, bool>>(
+                        Expression.Equal(
+                            Expression.Property(param, parameter.Name),
+                            Expression.Constant(parameter.Value)
+                        ),
+                        param
+                    );
 
-                source = source.Where(exp.Compile());
+                    source = source.Where(exp.Compile());
+                }
             }
         }
 
