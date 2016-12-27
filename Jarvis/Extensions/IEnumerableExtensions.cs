@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Jarvis.Models;
+using Jarvis.Filtering;
 
 public static class IEnumerableExtensions
 {
@@ -82,7 +82,7 @@ public static class IEnumerableExtensions
         // Check if we have any parameters.
         if (String.IsNullOrEmpty(fields))
         {
-            throw new ArgumentNullException(nameof(fields));
+            return source;
         }
 
         // Create input parameter "o".

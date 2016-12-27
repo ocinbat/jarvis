@@ -1,4 +1,4 @@
-﻿namespace Jarvis.Models
+﻿namespace Jarvis.Filtering
 {
     public class QueryParameter
     {
