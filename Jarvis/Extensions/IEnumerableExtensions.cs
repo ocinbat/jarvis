@@ -94,7 +94,7 @@ public static class IEnumerableExtensions
         // Get a list of assignable members.
         IEnumerable<string> assignableMembers = fields
             .Split(',')
-            .Where(o => typeof(T).GetProperty(o) != null)
+            .Where(o => typeof(T).GetProperty(o, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance) != null)
             .Select(o => o.Trim());
 
         // Check if we have any assignable member.
@@ -108,7 +108,7 @@ public static class IEnumerableExtensions
             .Select(o =>
             {
                 // Property "Field1".
-                PropertyInfo propertyInfo = typeof(T).GetProperty(o);
+                PropertyInfo propertyInfo = typeof(T).GetProperty(o, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
 
                 // Original value "o.Field1".
                 MemberExpression memberExpression = Expression.Property(parameterExpression, propertyInfo);
