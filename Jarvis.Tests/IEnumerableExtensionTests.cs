@@ -25,18 +25,5 @@ namespace Jarvis.Tests
 
             sourceList.Count().ShouldBeEquivalentTo(lists.Sum(l => l.Count()));
         }
-
-        [Test]
-        public void SelectTest()
-        {
-            IEnumerable<User> users = _users.Where(u => u.Id == 1).Select("id");
-
-            foreach (User user in users)
-            {
-                user.FirstName.Should().BeNullOrEmpty();
-                user.LastName.Should().BeNullOrEmpty();
-                user.UserName.Should().BeNullOrEmpty();
-            }
-        }
     }
 }
