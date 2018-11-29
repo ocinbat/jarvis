@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-public static class GenericExtensions
+﻿namespace Jarvis.Extensions
 {
-    public static bool IsDefault<T>(this T value) where T : struct
+    public static class GenericExtensions
     {
-        bool isDefault = value.Equals(default(T));
+        public static bool IsDefault<T>(this T value) where T : struct
+        {
+            bool isDefault = value.Equals(default(T));
 
-        return isDefault;
+            return isDefault;
+        }
     }
 }

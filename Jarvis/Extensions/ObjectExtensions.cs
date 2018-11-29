@@ -1,7 +1,10 @@
-﻿public static class ObjectExtensions
+﻿namespace Jarvis.Extensions
 {
-    public static bool HasProperty(this object obj, string propertyName)
+    public static class ObjectExtensions
     {
-        return obj.GetType().GetProperty(propertyName) != null;
+        public static bool HasProperty(this object obj, string propertyName)
+        {
+            return obj.GetType().GetProperty(propertyName) != null;
+        }
     }
 }

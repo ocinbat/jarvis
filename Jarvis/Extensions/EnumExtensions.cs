@@ -1,15 +1,18 @@
 ﻿using System;
 
-public static class EnumExtensions
+namespace Jarvis.Extensions
 {
-    public static int ToInt(this Enum e)
+    public static class EnumExtensions
     {
-        if (e == null)
+        public static int ToInt(this Enum e)
         {
-            throw new ArgumentNullException("e");
-        }
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
 
-        int value = Convert.ToInt32(e);
-        return value;
+            int value = Convert.ToInt32(e);
+            return value;
+        }
     }
 }

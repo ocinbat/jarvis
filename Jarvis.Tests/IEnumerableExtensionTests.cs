@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using Jarvis.Extensions;
 using Jarvis.Tests.Models;
 using NUnit.Framework;
 using Ploeh.AutoFixture;

@@ -1,7 +1,10 @@
-﻿public static class IntegerExtensions
+﻿namespace Jarvis.Extensions
 {
-    public static int ToInt(this long value)
+    public static class IntegerExtensions
     {
-        return (int) value;
+        public static int ToInt(this long value)
+        {
+            return (int) value;
+        }
     }
 }
