@@ -256,6 +256,11 @@ public static class StringExtensions
 
     public static string ToTitleCase(this string input, CultureInfo cultureInfo)
     {
+        if (String.IsNullOrEmpty(input))
+        {
+            return input;
+        }
+        
         TextInfo textInfo = cultureInfo.TextInfo;
         return textInfo.ToTitleCase(input.ToLower());
     }
